@@ -1,0 +1,116 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "swagger definition for com.service.forecast.controller.ForecastImpl"
+  x-java-interface: "cse.gen.weathermap.forecast.forecast.ForecastImplIntf"
+basePath: "/forecast"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+paths:
+  /show:
+    get:
+      operationId: "show"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "city"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ForecastSummary"
+  /extra:
+    post:
+      operationId: "extra"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "city"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "response of 200"
+          schema:
+            type: "string"
+        400:
+          description: "parameter error"
+          schema:
+            $ref: "#/definitions/MultiResponse"
+        401:
+          description: "parameter empty"
+          schema:
+            $ref: "#/definitions/MultiResponse"
+definitions:
+  MultiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+      message:
+        type: "string"
+    x-java-class: "com.service.forecast.entity.util.MultiResponse"
+  DateListItem:
+    type: "object"
+    properties:
+      date:
+        type: "integer"
+        format: "int64"
+      image:
+        type: "string"
+      dateTxt:
+        type: "string"
+      temperatureMax:
+        type: "number"
+        format: "double"
+      weather:
+        type: "string"
+      temperature:
+        type: "number"
+        format: "double"
+      temperatureMin:
+        type: "number"
+        format: "double"
+      humidity:
+        type: "number"
+        format: "double"
+      pressure:
+        type: "number"
+        format: "double"
+      windSpeed:
+        type: "number"
+        format: "double"
+      cloudsDeg:
+        type: "number"
+        format: "double"
+      rain3h:
+        type: "number"
+        format: "double"
+    x-java-class: "com.service.forecast.entity.objective1.DateListItem"
+  ForecastSummary:
+    type: "object"
+    properties:
+      country:
+        type: "string"
+      cityName:
+        type: "string"
+      coordinatesLon:
+        type: "number"
+        format: "double"
+      coordinatesLat:
+        type: "number"
+        format: "double"
+      dateList:
+        type: "array"
+        items:
+          $ref: "#/definitions/DateListItem"
+      currentTime:
+        type: "integer"
+        format: "int64"
+    x-java-class: "com.service.forecast.entity.objective2.ForecastSummary"
